@@ -1,4 +1,10 @@
 app.component('product-display',{
+    props: {
+        premium:{
+            type: Boolean,
+            required: true
+        }
+    },
     template:
     /*html*/
     ` <div class="product-display">
@@ -11,6 +17,7 @@ app.component('product-display',{
 
         <p v-if="inStock">In Stock</p>
         <p v-else>Out of Stock</p>
+        <p> Shipping: {{ shipping }}</p>
         <ul>
           <li v-for="detail in details">{{ detail }}</li>
         </ul>
@@ -26,11 +33,8 @@ app.component('product-display',{
         <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
       </div>
     </div>
-  </div>`
-
-})
-
-data() {}
+  </div>`,
+  data(){ 
     return {
         product: 'Socks',
         brand: 'Vue Mastery',
@@ -60,4 +64,12 @@ computed: {
     inStock() {
         return this.variants[this.selectedVariant].quantity
     },
+    shipping(){
+        if(this.premium){
+            return 'Free'
+        }
+        return 4.20
+    }
 }
+
+})
